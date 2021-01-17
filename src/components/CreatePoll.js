@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
 import { AppContext } from '../AppContext';
 import { savePoll } from '../FirebaseHelper';
-import { QUESTION_MAX_SIZE, ANSWER_MAX_SIZE } from '../Constants.json';
+import Constants from '../Constants.json';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -85,8 +85,8 @@ const CreatePoll = ({ history }) => {
         if (question === undefined || question.trim().length === 0) {
             return 'Please enter a valid question.';
         }
-        if (question === undefined || question.trim().length > QUESTION_MAX_SIZE) {
-            return `Please enter a question that is less than ${QUESTION_MAX_SIZE} characters long.`;
+        if (question === undefined || question.trim().length > Constants.QUESTION_MAX_SIZE) {
+            return `Please enter a question that is less than ${Constants.QUESTION_MAX_SIZE} characters long.`;
         }
         if (answers.length < 2) {
             return 'Please enter at least 2 answers.';
@@ -95,8 +95,8 @@ const CreatePoll = ({ history }) => {
             if (answer === undefined || answer.trim().length === 0) {
                 return { index, error: 'Please enter a valid answer' };
             }
-            if (answer.trim().length > ANSWER_MAX_SIZE) {
-                return { index, error: `Please enter an answer that is less than ${ANSWER_MAX_SIZE} characters long.` };
+            if (answer.trim().length > Constants.ANSWER_MAX_SIZE) {
+                return { index, error: `Please enter an answer that is less than ${Constants.ANSWER_MAX_SIZE} characters long.` };
             }
             return undefined;
         });
@@ -124,7 +124,7 @@ const CreatePoll = ({ history }) => {
                 if (typeof validationResult === 'string') {
                     showError(validationResult);
                 } else {
-                    showError(`Please enter answers that are no longer than ${ANSWER_MAX_SIZE} characters in length.`);
+                    showError(`Please enter answers that are no longer than ${Constants.ANSWER_MAX_SIZE} characters in length.`);
                 }
             }
         } catch (e) {

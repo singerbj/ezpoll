@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
         mode: isProd ? 'production' : 'development',
         entry: {
             main: path.resolve(APP_DIR, 'index.js'),
+            EZPoll: path.resolve(APP_DIR, 'EZPoll.js'),
         },
         output: {
             path: path.resolve(__dirname, './dist'),
