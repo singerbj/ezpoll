@@ -75,6 +75,7 @@ const CreatePoll = ({ history }) => {
             created: Date.now(),
             question: question.trim(),
             answers: answerObj,
+            votes: {},
         };
         localStorage.setItem('pollObjData', JSON.stringify(currentPollObj));
         return currentPollObj;

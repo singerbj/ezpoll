@@ -29,9 +29,7 @@ service cloud.firestore {
 
       function allowWriteOrUpdate(){
         return request.auth != null
-          && resource.data.question == request.resource.data.question
-          && resource.data.answers == request.resource.data.answers
-          && "lastVote" in request.resource.data
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["lastVote", "votes"])
           && request.resource.data.lastVote is number
           && request.resource.data.votes[request.auth.uid] is number
           && request.resource.data.votes.diff(resource.data.votes).affectedKeys().hasOnly([request.auth.uid])
