@@ -13,8 +13,8 @@ const firebaseConfig = {
     projectId: 'ezpoll-69d61',
     storageBucket: 'ezpoll-69d61.appspot.com',
     messagingSenderId: '902384455443',
-    appId: '1:902384455443:web:7404d3df9e14a8188854e6',
-    measurementId: 'G-LVK4Q3044X',
+    appId: '1:902384455443:web:724561b9e2bfc3568854e6',
+    measurementId: 'G-MY9E8H4C0X',
 };
 
 // Initialize Firebase App
