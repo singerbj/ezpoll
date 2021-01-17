@@ -1,8 +1,50 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    match /polls/{pollid}/{documents=**} {
+
+      function question() {
+        return request.resource.data.question;
+      }
+
+      function answers() {
+        return request.resource.data.answers;
+      }
+
+      function isValidQuestion() {
+        return question() is string
+            && question().size() > 0
+            && question().size() <= 100;
+      }
+
+      function isValidAnswer(answerIndex) {
+        return answers()[answerIndex] is string
+            && answers()[answerIndex].size() > 0
+            && answers()[answerIndex].size() <= 100;
+      }
+
+      function isValidOptionalAnswer(answerIndex) {
+        return !(answerIndex in answers()) || isValidAnswer(answerIndex);
+      }
+
+      allow read: if request.auth != null
+      allow write: if false
+      allow create: if request.auth != null
+        && isValidQuestion()
+        && answers().size() >= 1
+        && answers().size() <= 10
+        && isValidAnswer("0")
+        && isValidAnswer("1")
+        && isValidOptionalAnswer("2")
+        && isValidOptionalAnswer("3")
+        && isValidOptionalAnswer("4")
+        && isValidOptionalAnswer("5")
+        && isValidOptionalAnswer("6")
+        && isValidOptionalAnswer("7")
+        && isValidOptionalAnswer("8")
+        && isValidOptionalAnswer("9");
+      allow update: if request.auth != null //TODO: change this (maybe?)
+      allow delete: if false
     }
   }
 }

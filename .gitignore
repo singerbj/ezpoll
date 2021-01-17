@@ -64,3 +64,19 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# dist folder for dev ui builds
+dist/
+
+# from functions
+node_modules/
+yarn-debug.log*
+yarn-error.log*
+ui-debug.log
+
+# Yarn Integrity file
+.yarn-integrity
+
+.runtimeconfig.json
+
+ezpoll-firebase-adminsdk*
