@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => {
             width: '100%',
             height: '66px',
             marginBottom: theme.spacing(2),
+            border: `1px dashed ${theme.palette.grey.A700}`,
             '&:hover': {
                 border: '1px dashed white',
                 cursor: 'pointer',
@@ -158,14 +159,15 @@ const ViewPoll = ({ history, match }) => {
                                             <Box className={classes.percentBar} style={{ width: `calc(${percentage}% - ${theme.spacing(2)}px)` }} />
                                             <Box className={classes.answerContent}>
                                                 {answer}
-                                                {isVotedAnswer(i) && (
-                                                    <CheckCircleIcon
-                                                        className={classes.answerIcon}
-                                                        onClick={() => {
-                                                            makeVote(i);
-                                                        }}
-                                                    />
-                                                )}
+                                                {/* {isVotedAnswer(i) && ( */}
+                                                <CheckCircleIcon
+                                                    className={classes.answerIcon}
+                                                    style={isVotedAnswer(i) ? {} : { opacity: 0.1 }}
+                                                    onClick={() => {
+                                                        makeVote(i);
+                                                    }}
+                                                />
+                                                {/* )} */}
                                             </Box>
                                         </Box>
                                     );

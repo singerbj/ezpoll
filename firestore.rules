@@ -27,8 +27,20 @@ service cloud.firestore {
         return !(answerIndex in answers()) || isValidAnswer(answerIndex);
       }
 
+      function allowWriteOrUpdate(){
+        return request.auth != null
+          && resource.data.question == request.resource.data.question
+          && resource.data.answers == request.resource.data.answers
+          && "lastVote" in request.resource.data
+          && request.resource.data.lastVote is number
+          && request.resource.data.votes[request.auth.uid] is number
+          && request.resource.data.votes.diff(resource.data.votes).affectedKeys().hasOnly([request.auth.uid])
+          && request.resource.data.votes[request.auth.uid] >= 0
+          && request.resource.data.votes[request.auth.uid] < 10
+      }
+
       allow read: if request.auth != null
-      allow write: if false
+      allow write: if allowWriteOrUpdate()
       allow create: if request.auth != null
         && isValidQuestion()
         && answers().size() >= 1
@@ -43,7 +55,7 @@ service cloud.firestore {
         && isValidOptionalAnswer("7")
         && isValidOptionalAnswer("8")
         && isValidOptionalAnswer("9");
-      allow update: if request.auth != null //TODO: change this (maybe?)
+      allow update: if allowWriteOrUpdate()
       allow delete: if false
     }
   }
